@@ -1,14 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Alphabetical Band Sorter</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabetical Article Sorter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
-  <div id="main">
-    <ul id="band"></ul>
-  </div>
-  <script src="script.js"></script>
+    <h1>Band List</h1>
+    <ul id="band">
+        <!-- List items will be populated here -->
+    </ul>
+
+    <script>
+        const bands = [
+            'The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil',
+            'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State',
+            'We Came as Romans', 'Counterparts', 'Oh, Sleeper',
+            'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'
+        ];
+
+        // Function to remove "a", "an", "the" from the beginning of the string
+        function cleanBandName(name) {
+            const wordsToRemove = ['a', 'an', 'the'];
+            const nameArray = name.split(' ');
+            if (wordsToRemove.includes(nameArray[0].toLowerCase())) {
+                nameArray.shift(); // Removes the first word (a, an, the)
+            }
+            return nameArray.join(' ');
+        }
+
+        // Sort the bands array alphabetically, ignoring "a", "an", and "the"
+        const sortedBands = bands.sort((a, b) => {
+            const cleanA = cleanBandName(a).toLowerCase();
+            const cleanB = cleanBandName(b).toLowerCase();
+            return cleanA.localeCompare(cleanB);
+        });
+
+        // Create the list items and append them to the <ul> with the id 'band'
+        const bandList = document.getElementById('band');
+        sortedBands.forEach(band => {
+            const listItem = document.createElement('li');
+            listItem.textContent = band;
+            bandList.appendChild(listItem);
+        });
+    </script>
 </body>
 </html>
