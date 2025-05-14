@@ -6,26 +6,49 @@
     <title>Alphabetical Article Sorter</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+            background-size: cover;
         }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
         h1 {
             text-align: center;
+            margin-bottom: 20px;
         }
+
         ul {
-            list-style-type: none;
-            padding: 0;
+            list-style-type: square;
+            padding-left: 20px;
         }
+
         li {
-            padding: 5px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
-    <h1>Band List</h1>
-    <ul id="band">
-        <!-- List items will be populated here -->
-    </ul>
+    <div class="container">
+        <h1>Band List</h1>
+        <ul id="band">
+            <!-- Bands will be populated here -->
+        </ul>
+    </div>
 
     <script>
         const bands = [
@@ -35,29 +58,19 @@
             'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'
         ];
 
-        // Function to remove "a", "an", "the" from the beginning of the string
         function cleanBandName(name) {
-            const wordsToRemove = ['a', 'an', 'the'];
-            const nameArray = name.split(' ');
-            if (wordsToRemove.includes(nameArray[0].toLowerCase())) {
-                nameArray.shift(); // Removes the first word (a, an, the)
-            }
-            return nameArray.join(' ');
+            return name.replace(/^(a |an |the )/i, '').trim();
         }
 
-        // Sort the bands array alphabetically, ignoring "a", "an", and "the"
         const sortedBands = bands.sort((a, b) => {
-            const cleanA = cleanBandName(a).toLowerCase();
-            const cleanB = cleanBandName(b).toLowerCase();
-            return cleanA.localeCompare(cleanB);
+            return cleanBandName(a).localeCompare(cleanBandName(b));
         });
 
-        // Create the list items and append them to the <ul> with the id 'band'
         const bandList = document.getElementById('band');
         sortedBands.forEach(band => {
-            const listItem = document.createElement('li');
-            listItem.textContent = band;
-            bandList.appendChild(listItem);
+            const li = document.createElement('li');
+            li.textContent = band;
+            bandList.appendChild(li);
         });
     </script>
 </body>
